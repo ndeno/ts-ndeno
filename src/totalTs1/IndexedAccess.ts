@@ -18,10 +18,26 @@ export type IndividualProgram = Exclude<
   'group' | 'announcement'
 >;
 
+/*
+  totally messy example, but ... 
+  indexed by unions
+*/
+export type IndividualProgramWithUnions = typeof programModeEnumMap[
+  | 'ONE_ON_ONE'
+  | 'SELF_DIRECTED'
+  | 'PLANNED_ONE_ON_ONE'
+  | 'PLANNED_SELF_DIRECTED'];
+
 type tests = [
   Expect<
     Equal<
       IndividualProgram,
+      '1on1' | 'selfDirected' | 'planned1on1' | 'plannedSelfDirected'
+    >
+  >,
+  Expect<
+    Equal<
+    IndividualProgramWithUnions,
       '1on1' | 'selfDirected' | 'planned1on1' | 'plannedSelfDirected'
     >
   >
