@@ -8,12 +8,12 @@ export type Event =
   | {
       type: 'focus';
       event: FocusEvent;
-      additional: 'foo'
+      additional: 'foo';
     }
   | {
       type: 'keydown';
       event: KeyboardEvent;
-      additional: 'bar'
+      additional: 'bar';
     };
 
 // extracts any union member from tagged union that partially matches
