@@ -51,7 +51,7 @@ type GetParserResult<T> = T extends { parse: () => infer TParse }
   ? TReturn
   : never;
 
-// how to make it nice witha union
+// how to make it nice with a union
 type GetParserResultWithUnion<T> = T extends
   | { parse: () => infer TParse }
   | { extract: () => infer TParse }

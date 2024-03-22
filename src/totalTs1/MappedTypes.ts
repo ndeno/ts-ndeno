@@ -30,3 +30,51 @@ type AttributeGettersKeyof = {
 type AttributeGettersRemapped = {
   [K in keyof Attributes as `get${Capitalize<K>}`]: () => Attributes[K];
 };
+
+interface Example {
+  name: string;
+  age: number;
+  id: string;
+  organisationId: string;
+  groupId: string;
+}
+
+// use to search for all camel/pascal case ids
+type ContainsId<T> = T extends `${string}${'id' | 'Id'}${string}` ? T : never;
+
+// map only keys which meet a certain conditions
+type OnlyIdKeys<T> = {
+  [A in keyof T as ContainsId<A>]: T[A];
+};
+
+const onlyIdKeys: OnlyIdKeys<Example> = {
+  groupId: '123',
+  id: '123',
+  organisationId: '123',
+};
+
+export type RouteTaggedUnion =
+  | {
+      route: '/';
+      search: {
+        page: string;
+        perPage: string;
+      };
+    }
+  | { route: '/about'; search: {} }
+  | { route: '/admin'; search: {} }
+  | { route: '/admin/users'; search: {} };
+
+type RouteInfer<T> = T extends { route: infer K } ? K : T;
+const test: RouteInfer<RouteTaggedUnion> = '/';
+
+// verbose extract to get keys of discriminated object to a m
+
+export type VerboseExtract<T extends RouteTaggedUnion> = {
+  [A in RouteInfer<T>]: T['search'];
+};
+
+// much more simple
+export type SimplerExtract = {
+  [R in RouteTaggedUnion as R['route']]: R['search'];
+};
