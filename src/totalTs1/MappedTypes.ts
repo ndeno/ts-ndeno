@@ -78,3 +78,14 @@ export type VerboseExtract<T extends RouteTaggedUnion> = {
 export type SimplerExtract = {
   [R in RouteTaggedUnion as R['route']]: R['search'];
 };
+
+// index over the values of an object and create a union type
+interface Values {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+type ValuesAsUnionOfTuples = {
+  [K in keyof Values]: [K, Values[K]];
+}[keyof Values];
