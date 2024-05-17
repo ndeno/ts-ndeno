@@ -89,3 +89,42 @@ interface Values {
 type ValuesAsUnionOfTuples = {
   [K in keyof Values]: [K, Values[K]];
 }[keyof Values];
+
+interface FruitMap {
+  apple: 'red';
+  banana: 'yellow';
+  orange: 'orange';
+}
+
+// keys and values
+type FruitMapValues = {
+  [K in keyof FruitMap]: `${K}:${FruitMap[K]}`;
+};
+type TransformedFruitMapKeys = keyof FruitMap;
+
+const keyOption: TransformedFruitMapKeys = 'orange';
+
+// turn Fruitmap object union into a regular union.
+type TransformedFruitMap = {
+  [K in keyof FruitMap]: `${K}:${FruitMap[K]}`;
+}[keyof FruitMap];
+
+type Fruit =
+  | {
+      name: 'apple';
+      color: 'red';
+    }
+  | {
+      name: 'banana';
+      color: 'yellow';
+    }
+  | {
+      name: 'orange';
+      color: 'orange';
+    };
+
+// turn Fruitmap discriminated union into a regular union.
+
+export type TransformedFruit = {
+  [F in Fruit as F['name']]: `${F['color']}:${F['name']}`;
+}[Fruit['name']];
