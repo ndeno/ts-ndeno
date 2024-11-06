@@ -46,3 +46,8 @@ const modifiedExample = getHomePageFeatureFlagsButElegant(EXAMPLE, (flags) => ({
   ...flags,
   more: 4,
 }));
+
+const getObjectKeys = <T extends string>(obj: Record<T, unknown>) =>
+  Object.keys(obj) as Array<T>;
+
+const keys = getObjectKeys({ foo: 2, bar: 3 });
